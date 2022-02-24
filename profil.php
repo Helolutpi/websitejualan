@@ -3,7 +3,7 @@
     session_start();
     include 'db.php';
     if($_SESSION['status_login'] != true){
-        echo '<script>window.location="login.php"</script>';
+        echo '<script>window.location="index.php"</script>';
     }
     $query = mysqli_query($conn, "SELECT * FROM tb_admin WHERE admin_id = '".$_SESSION['id']."'");
     $d = mysqli_fetch_object($query);
@@ -44,13 +44,13 @@
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li class="nav__item">
-                            <a href="#home dashboard.php" class="nav__link active-link">Dashboard</a>
+                            <a href="dashboard.php" class="nav__link ">Dashboard</a>
                         </li>
                         <li class="nav__item">
-                            <a href="profil.php" class="nav__link">Profil</a>
+                            <a href="profil.php" class="nav__link active-link">Profil</a>
                         </li>
                         <li class="nav__item">
-                            <a href="#products data-kategori.php" class="nav__link">Data Category</a>
+                            <a href=" data-kategori.php" class="nav__link">Data Category</a>
                         </li>
                         <li class="nav__item">
                             <a href="#new data-produk.php" class="nav__link">Products</a>

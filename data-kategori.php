@@ -1,6 +1,7 @@
 <?php
 
     session_start();
+    include 'db.php';
     if($_SESSION['status_login'] != true){
         echo '<script>window.location="index.php"</script>';
     }
@@ -14,9 +15,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-       
-
+        <!--=============== BOOTSTRAP 5 ===============-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <!--=============== BOXICONS ===============-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
 
@@ -32,20 +32,19 @@
         <!--==================== HEADER ====================-->
         <header class="header" id="header">
             <nav class="nav container">
-                <a href="dashboard.php" class="nav__logo">
-                    Shop
-                </a>
+                
+                <p class="nav__logo1">data category</p>
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li class="nav__item">
-                            <a href=" dashboard.php" class="nav__link active-link">Dashboard</a>
+                            <a href=" dashboard.php" class="nav__link ">Dashboard</a>
                         </li>
                         <li class="nav__item">
                             <a href="profil.php" class="nav__link">Profil</a>
                         </li>
                         <li class="nav__item">
-                            <a href="data-kategori.php" class="nav__link">Data Category</a>
+                            <a href="data-kategori.php" class="nav__link active-link">Data Category</a>
                         </li>
                         <li class="nav__item">
                             <a href="#new data-produk.php" class="nav__link">Products</a>
@@ -64,7 +63,7 @@
                     </div>
                 </div>
 
-                <div class="nav__btns">
+                <div class="nav__btns1">
                     <!-- Theme change button -->
                     <i class='bx bx-moon change-theme' id="theme-button"></i>
 
@@ -195,7 +194,39 @@
             <h2 class="section__title">Hi, Welcome <?php echo $_SESSION['a_global']->admin_name ?></h2>
    
         </div>
+        <a href="tambah-kategori.php">
+        <button class="button1 ">Tambah Barang</button></a>
         </section>
+
+<section class="section__table">
+        <table class="table   ">
+            <thead >
+            <tr class="table__title" >
+                <th scope="col">No</th>
+                <th  scope="col">Category</th>
+                <th scope="col">Action</th>
+                
+            </tr>
+            </thead>
+  <tbody>
+      <?php
+        $no = 1;
+        $kategori = mysqli_query($conn, "SELECT * FROM tb_category ORDER BY category_id DESC");
+        while($row = mysqli_fetch_array($kategori)){
+      ?>
+    <tr class="table__title" >
+      <th width="60px"scope="row"><?php echo $no++?></th>
+      <td><?php echo $row['category_name']?></td>
+      <td>
+          <a  href="edit-kategori.php?id=<?php echo $row['category_id'] ?>">Edit</a> || <a class="table__link" href="proses-hapus.php?idk=<?php echo $row['category_id']?>">Detele</a>
+      </td>
+    </tr>
+    <?php } ?>
+    
+  </tbody>
+</table>
+</section>
+        
             <!--==================== NEW ===========
             <section class="new section container" id="new">
                 <h2 class="section__title">

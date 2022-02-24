@@ -1,9 +1,12 @@
 <?php
 
     session_start();
+    include 'db.php';
     if($_SESSION['status_login'] != true){
         echo '<script>window.location="index.php"</script>';
     }
+   
+
 ?>
 
 
@@ -15,7 +18,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-       
+           <!--======= BOX ICON ======-->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 
         <!--=============== BOXICONS ===============-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -32,20 +36,19 @@
         <!--==================== HEADER ====================-->
         <header class="header" id="header">
             <nav class="nav container">
-                <a href="dashboard.php" class="nav__logo">
-                    Shop
+                <a href="dashboard.php" class="nav__logo ">data category
                 </a>
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li class="nav__item">
-                            <a href=" dashboard.php" class="nav__link active-link">Dashboard</a>
+                            <a href="dashboard.php" class="nav__link ">Dashboard</a>
                         </li>
                         <li class="nav__item">
-                            <a href="profil.php" class="nav__link">Profil</a>
+                            <a href="profil.php" class="nav__link ">Profil</a>
                         </li>
                         <li class="nav__item">
-                            <a href="data-kategori.php" class="nav__link">Data Category</a>
+                            <a href=" data-kategori.php" class="nav__link active-link">Data Category</a>
                         </li>
                         <li class="nav__item">
                             <a href="#new data-produk.php" class="nav__link">Products</a>
@@ -186,15 +189,47 @@
             <!--==================== HOME ====================-->
            
 
-            <section class="section">
-               
+        <section class="section section__form">
+            <div class="home__data">
+                <h2 class="section__title">Hi, Welcome <?php echo $_SESSION['a_global']->admin_name ?></h2>
+
+            </div>
+            <form action="" method="POST"class="form__content">
+            
+                <h1 class="form__title">ADD DATA CATEGORY</h1>
+                <div class="form__div form__div-one focus">
+                    <div class="form__icon">
+                     <i class="bx bx-user-circle"></i>
+                    </div>
+
+                    <div class="form__div-input">
+                     <label for="" class="form__label">Nama Kategori</label>
+                     <input type="text" name="nama" class="form__input"  required>
+                    </div>
+                </div>
+         
+                <input type="submit" name="submit" class="form__button" value="Submit">
+
 
                 
+            </form>
+            <?php
+                if(isset($_POST['submit'])){
+                    $nama = ucwords($_POST['nama']);
 
-        <div class="home__data">
-            <h2 class="section__title">Hi, Welcome <?php echo $_SESSION['a_global']->admin_name ?></h2>
-   
-        </div>
+                    $insert = mysqli_query($conn, "INSERT INTO tb_category VALUES(
+                                            null, 
+                                           '".$nama."')");
+
+                    if($insert){
+                        echo '<script>alert("Berhasil Ditambahkan")</script>';
+                        echo '<script>window.location="data-kategori.php"</script>';
+                    }else {
+                        echo'gagal'.mysqli_error($conn);
+                    }
+                }
+            ?>
+    
         </section>
             <!--==================== NEW ===========
             <section class="new section container" id="new">
@@ -276,5 +311,6 @@
 
         <!--=============== MAIN JS ===============-->
         <script src="assets/js/welcome.js"></script>
+        
     </body>
 </html>
